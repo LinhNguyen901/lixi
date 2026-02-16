@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Lì xì Tết Nguyên Đán</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #ffecd2 0%, #fcb69f 25%, #ff512f 60%, #dd2476 100%);
+      color: #fff5e6;
+    }
+
+    .overlay-pattern {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.12) 1px, transparent 2px),
+        radial-gradient(circle, rgba(0, 0, 0, 0.08) 1px, transparent 2px);
+      background-size: 40px 40px, 60px 60px;
+      mix-blend-mode: soft-light;
+      opacity: 0.7;
+      z-index: -1;
+    }
+
+    .container {
+      position: relative;
+      width: min(420px, 100%);
+      padding: 28px 24px 30px;
+      border-radius: 24px;
+      background: linear-gradient(145deg, #911212, #cc2525);
+      box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.35),
+        0 0 0 4px rgba(255, 215, 0, 0.3);
+      border: 2px solid rgba(255, 227, 159, 0.9);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .frame-corner {
+      position: absolute;
+      width: 42px;
+      height: 42px;
+      border: 3px solid #ffd966;
+      border-radius: 14px;
+      opacity: 0.7;
+    }
+
+    .frame-corner.tl {
+      top: 8px;
+      left: 8px;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .frame-corner.tr {
+      top: 8px;
+      right: 8px;
+      border-left: none;
+      border-bottom: none;
+    }
+
+    .frame-corner.bl {
+      bottom: 8px;
+      left: 8px;
+      border-right: none;
+      border-top: none;
+    }
+
+    .frame-corner.br {
+      bottom: 8px;
+      right: 8px;
+      border-left: none;
+      border-top: none;
+    }
+
+    .lantern {
+      position: absolute;
+      width: 60px;
+      height: 80px;
+      border-radius: 50% / 60%;
+      background: radial-gradient(circle at 30% 20%, #ffdf7e, #ff6f3c 45%, #b31217 100%);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+      animation: floatLantern 3.4s ease-in-out infinite alternate;
+    }
+
+    .lantern::before,
+    .lantern::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .lantern::before {
+      top: -8px;
+      width: 36px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #f8e9a1, #ffd54f);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .lantern::after {
+      bottom: -20px;
+      width: 4px;
+      height: 20px;
+      background: linear-gradient(to bottom, #f1c40f, #b8860b);
+    }
+
+    .lantern.small {
+      transform: scale(0.7);
+      opacity: 0.8;
+      filter: blur(0.2px);
+    }
+
+    .lantern.left {
+      left: -18px;
+      top: 10px;
+      animation-delay: -0.8s;
+    }
+
+    .lantern.right {
+      right: -18px;
+      top: 24px;
+      animation-delay: -0.2s;
+    }
+
+    .lantern.left.small {
+      left: -6px;
+      top: 80px;
+      animation-delay: -1.5s;
+    }
+
+    .lantern.right.small {
+      right: -6px;
+      top: 96px;
+      animation-delay: -1.2s;
+    }
+
+    @keyframes floatLantern {
+      0% {
+        transform: translateY(0) scale(1);
+      }
+
+      100% {
+        transform: translateY(-8px) scale(1.02);
+      }
+    }
+
+    .title {
+      margin-top: 14px;
+      margin-bottom: 2px;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #ffeaa7;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #ffe6c4;
+      opacity: 0.9;
+      margin-bottom: 18px;
+    }
+
+    .lucky-text {
+      margin-top: 6px;
+      font-size: 0.9rem;
+      color: #fffae3;
+      opacity: 0.9;
+    }
+
+    .red-envelope {
+      margin: 18px auto 14px;
+      width: 180px;
+      height: 240px;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #ff2d2d, #a60000);
+      position: relative;
+      box-shadow:
+        0 14px 26px rgba(0, 0, 0, 0.45),
+        inset 0 0 0 2px rgba(255, 237, 180, 0.8);
+      overflow: hidden;
+    }
+
+    .red-envelope::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.25), transparent 55%);
+      pointer-events: none;
+    }
+
+    .envelope-top {
+      position: absolute;
+      top: -65px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 0 0 50% 50%;
+      width: 240px;
+      height: 140px;
+      background: linear-gradient(145deg, #d10c0c, #7f0000);
+      box-shadow: 0 16px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .coin {
+      position: absolute;
+      top: 64px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff5c1 0%, #ffd700 40%, #b8860b 80%);
+      box-shadow:
+        0 0 10px rgba(255, 246, 186, 0.9),
+        0 0 30px rgba(255, 223, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .coin-inner {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 4px solid rgba(181, 119, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #b22222;
+      background: radial-gradient(circle, #ffeaa7 0%, #ffd54f 60%);
+    }
+
+    .amount-display {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      text-align: center;
+      color: #fff7da;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .amount-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.85;
+      margin-bottom: 3px;
+    }
+
+    .amount-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fffdde;
+    }
+
+    .amount-value span {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-left: 3px;
+    }
+
+    .btn-wrap {
+      margin-top: 18px;
+    }
+
+    .wish-wrap {
+      margin-top: 14px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.18);
+      color: #fffae3;
+      font-size: 0.86rem;
+      line-height: 1.5;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+    }
+
+    .wish-label {
+      font-size: 0.8rem;
+      opacity: 0.85;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+      color: #ffe9c4;
+    }
+
+    .wish-text {
+      font-weight: 500;
+    }
+
+    .btn-random {
+      position: relative;
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.98rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #ffd54f, #ffb300);
+      color: #8b1a1a;
+      box-shadow:
+        0 10px 18px rgba(0, 0, 0, 0.4),
+        0 0 0 2px rgba(255, 243, 216, 0.9);
+      transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.1s ease;
+    }
+
+    .btn-random::before {
+      content: "";
+      position: absolute;
+      inset: -3px;
+      border-radius: inherit;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .btn-random:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow:
+        0 12px 22px rgba(0, 0, 0, 0.5),
+        0 0 0 2px rgba(255, 243, 216, 1);
+    }
+
+    .btn-random:hover::before {
+      opacity: 1;
+    }
+
+    .btn-random:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.5),
+        0 0 0 2px rgba(255, 243, 216, 0.9);
+    }
+
+    .range-text {
+      margin-top: 8px;
+      font-size: 0.82rem;
+      color: #ffe9c4;
+      opacity: 0.95;
+    }
+
+    .note-text {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #ffe9c4;
+      opacity: 0.85;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #fff7b2;
+      opacity: 0.8;
+      box-shadow: 0 0 10px rgba(255, 255, 200, 0.9);
+      animation: twinkle 1.8s infinite alternate ease-in-out;
+    }
+
+    .sparkle.s1 {
+      top: 14%;
+      left: 14%;
+      animation-delay: -0.2s;
+    }
+
+    .sparkle.s2 {
+      top: 10%;
+      right: 18%;
+      animation-delay: -0.9s;
+    }
+
+    .sparkle.s3 {
+      bottom: 12%;
+      left: 10%;
+      animation-delay: -1.3s;
+    }
+
+    .sparkle.s4 {
+      bottom: 16%;
+      right: 12%;
+      animation-delay: -0.5s;
+    }
+
+    @keyframes twinkle {
+      0% {
+        transform: scale(0.5);
+        opacity: 0.4;
+      }
+
+      100% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+    }
+
+    .shake {
+      animation: shake 0.5s ease-in-out;
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      20% {
+        transform: translateX(-4px);
+      }
+
+      40% {
+        transform: translateX(4px);
+      }
+
+      60% {
+        transform: translateX(-3px);
+      }
+
+      80% {
+        transform: translateX(3px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        margin: 12px;
+        padding: 22px 18px 24px;
+      }
+
+      .red-envelope {
+        width: 160px;
+        height: 220px;
+      }
+
+      .coin {
+        top: 60px;
+      }
+
+      .title {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="overlay-pattern"></div>
+
+  <div class="container">
+    <div class="frame-corner tl"></div>
+    <div class="frame-corner tr"></div>
+    <div class="frame-corner bl"></div>
+    <div class="frame-corner br"></div>
+
+    <div class="lantern left"></div>
+    <div class="lantern right"></div>
+    <div class="lantern left small"></div>
+    <div class="lantern right small"></div>
+
+    <div class="sparkle s1"></div>
+    <div class="sparkle s2"></div>
+    <div class="sparkle s3"></div>
+    <div class="sparkle s4"></div>
+
+    <h1 class="title">Lì Xì Đầu Năm</h1>
+
+    <div class="red-envelope" id="envelope">
+      <div class="envelope-top"></div>
+      <div class="coin">
+        <div class="coin-inner">Tết</div>
+      </div>
+      <div class="amount-display">
+        <div class="amount-value" id="amount">0 <span>VNĐ</span></div>
+      </div>
+    </div>
+
+    <div class="btn-wrap">
+      <button class="btn-random" id="btnRandom">Bốc Lì Xì</button>
+    </div>
+
+    <div class="wish-wrap">
+      <p class="wish-text" id="wishText">Bấm "Bốc Lì Xì" để nhận lời chúc Tết thật ngọt ngào nha nha nha nha nha!</p>
+    </div>
+  </div>
+
+  <script>
+    function randomLuckyMoney() {
+      const min = 1;
+      const max = 500;
+      const randomStep = Math.floor(Math.random() * (max - min + 1)) + min;
+      return randomStep * 1000;
+    }
+
+    function formatVND(amount) {
+      return amount.toLocaleString("vi-VN");
+    }
+
+    const wishes = [
+      "Chúc Đoan Trang năm mới luôn rạng rỡ như hoa mai, mọi điều như ý, vạn sự bình an.",
+      "Chúc Đoan Trang Tết này hạnh phúc đủ đầy, tiền vô như nước, nụ cười luôn trên môi.",
+      "Năm mới chúc Đoan Trang sức khỏe dồi dào, học hành – công việc đều thăng tiến rực rỡ.",
+      "Chúc Đoan Trang một năm mới an yên bên gia đình, gặp nhiều điều thật may mắn và tốt đẹp.",
+      "Tết đến xuân sang, chúc Đoan Trang luôn xinh đẹp, tự tin và thành công trong mọi kế hoạch.",
+      "Chúc Đoan Trang cả năm được quý nhân phù trợ, làm gì cũng thuận buồm xuôi gió.",
+      "Năm mới chúc Đoan Trang nhiều niềm vui mới, trải nghiệm mới và thật nhiều kỷ niệm đẹp.",
+      "Chúc Đoan Trang một năm mới bình an, vạn điều như ý, nụ cười không bao giờ tắt."
+    ];
+
+    const btn = document.getElementById("btnRandom");
+    const amountEl = document.getElementById("amount");
+    const envelope = document.getElementById("envelope");
+    const wishTextEl = document.getElementById("wishText");
+
+    btn.addEventListener("click", () => {
+      const amount = randomLuckyMoney();
+
+      envelope.classList.remove("shake");
+      void envelope.offsetWidth;
+      envelope.classList.add("shake");
+
+      amountEl.innerHTML = formatVND(amount) + ' <span>VNĐ</span>';
+
+      const randomIndex = Math.floor(Math.random() * wishes.length);
+      wishTextEl.textContent = wishes[randomIndex];
+    });
+  </script>
+</body>
+
+</html>
